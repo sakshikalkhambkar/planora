@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planora &mdash; Modern AI Task Manager & Reminders</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Modern Letter P Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><defs><linearGradient id='bg' x1='0' y1='0' x2='32' y2='32' gradientUnits='userSpaceOnUse'><stop offset='0%25' stop-color='%234f46e5'/><stop offset='50%25' stop-color='%237c3aed'/><stop offset='100%25' stop-color='%23db2777'/></linearGradient></defs><rect width='32' height='32' rx='8' fill='url(%23bg)'/><rect x='7' y='6' width='5' height='20' rx='2.5' fill='white'/><path d='M10 6H19C23.4183 6 27 9.58172 27 14C27 18.4183 23.4183 22 19 22H10V17H18.5C20.1569 17 21.5 15.6569 21.5 14C21.5 12.3431 20.1569 11 18.5 11H10V6Z' fill='white'/></svg>">
+</head>
+<body>
+  <div class="app-background"></div>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <!-- Modern Letter P Logo Mark -->
+        <div class="logo-icon planora-logo" title="Planora">
+          <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="5" width="5.5" height="22" rx="2.75" fill="white"/>
+            <path d="M9 5H18.5C23.1944 5 27 8.8056 27 13.5C27 18.1944 23.1944 22 18.5 22H9V16.5H18C19.6569 16.5 21 15.1569 21 13.5C21 11.8431 19.6569 10.5 18 10.5H9V5Z" fill="white"/>
+          </svg>
+        </div>
+        <div>
+          <div class="title-with-badge">
+            <h1 class="app-title">Planora</h1>
+            <span class="ai-pill-badge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+              </svg>
+              AI Automation
+            </span>
+          </div>
+          <p class="app-subtitle" id="current-date">Smart scheduling, reminders & productivity</p>
+        </div>
+      </div>
+      
+      <div class="header-right">
+        <!-- Notification Permission Button -->
+        <button id="notify-perm-btn" class="icon-btn" title="Enable Desktop Reminders / Notifications" aria-label="Enable notifications">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+          </svg>
+        </button>
+
+        <button id="open-copilot-header-btn" class="btn btn-ai-gradient btn-sm" title="Open AI Co-Pilot">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+          </svg>
+          <span>Ask AI</span>
+        </button>
+
+        <button id="theme-toggle-btn" class="icon-btn theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- AI Automation Hub Toolbar -->
+    <section class="ai-hub-card" aria-label="AI Automation Hub">
+      <div class="ai-hub-header">
+        <div class="ai-hub-title">
+          <span class="ai-sparkle-icon">✨</span>
+          <span>Planora AI Automations & Reminders</span>
+        </div>
+        <div class="ai-hub-badges">
+          <span class="ai-status-tag" id="reminder-status-tag">🔔 Reminders Active</span>
+          <span class="ai-status-tag">Engine Ready</span>
+        </div>
+      </div>
+      <div class="ai-actions-grid">
+        <button id="btn-ai-breakdown" class="ai-action-btn" title="Break down a project or goal into actionable subtasks">
+          <span class="ai-btn-icon">🧩</span>
+          <span class="ai-btn-text">
+            <strong>Break Down Goal</strong>
+            <small>AI auto-generates subtasks</small>
+          </span>
+        </button>
+
+        <button id="btn-ai-prioritize" class="ai-action-btn" title="Intelligently auto-assign priority based on due dates & urgency">
+          <span class="ai-btn-icon">🎯</span>
+          <span class="ai-btn-text">
+            <strong>Auto-Prioritize</strong>
+            <small>Optimize priority ranking</small>
+          </span>
+        </button>
+
+        <button id="btn-ai-briefing" class="ai-action-btn" title="Generate an executive morning briefing of your agenda">
+          <span class="ai-btn-icon">📊</span>
+          <span class="ai-btn-text">
+            <strong>Daily Briefing</strong>
+            <small>AI workload synthesis</small>
+          </span>
+        </button>
+
+        <button id="btn-ai-copilot" class="ai-action-btn" title="Open conversational AI assistant">
+          <span class="ai-btn-icon">⚡</span>
+          <span class="ai-btn-text">
+            <strong>AI Co-Pilot</strong>
+            <small>Custom automated prompts</small>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- Stats Summary Card -->
+    <section class="stats-card" aria-label="Task Summary">
+      <div class="stat-item">
+        <span class="stat-value" id="stat-total">0</span>
+        <span class="stat-label">Total Tasks</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item highlight-pending">
+        <span class="stat-value" id="stat-pending">0</span>
+        <span class="stat-label">Pending</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item highlight-completed">
+        <span class="stat-value" id="stat-completed">0</span>
+        <span class="stat-label">Completed</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-value" id="stat-rate">0%</span>
+        <span class="stat-label">Done Rate</span>
+      </div>
+    </section>
+
+    <!-- Add Task Card (with Live AI Natural Language Parser + Reminders) -->
+    <section class="card add-task-card" aria-labelledby="add-task-heading">
+      <div class="add-task-top">
+        <h2 id="add-task-heading" class="card-section-title">
+          <span class="gradient-text">Smart Task Creation</span>
+        </h2>
+        <span class="nlp-hint-tag">⚡ AI Natural Language & Reminders</span>
+      </div>
+
+      <form id="add-task-form" autocomplete="off">
+        <div class="form-group main-input-group">
+          <input
+            type="text"
+            id="task-title-input"
+            class="text-input"
+            placeholder="e.g. 'Team design review tomorrow at 3pm urgent'..."
+            maxlength="200"
+            required
+            aria-label="Task title"
+          >
+          <button type="submit" class="btn btn-primary" id="add-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Task</span>
+          </button>
+        </div>
+
+        <!-- Real-time AI NLP Detection Preview Strip -->
+        <div id="ai-nlp-preview" class="ai-nlp-preview hidden">
+          <div class="nlp-preview-header">
+            <span class="sparkle">✨</span>
+            <span class="nlp-label">AI Auto-Detected:</span>
+          </div>
+          <div class="nlp-preview-badges">
+            <span id="nlp-title-badge" class="nlp-chip">Title: <strong id="nlp-title-val">-</strong></span>
+            <span id="nlp-date-badge" class="nlp-chip">Due: <strong id="nlp-date-val">-</strong></span>
+            <span id="nlp-time-badge" class="nlp-chip">Reminder: <strong id="nlp-time-val">-</strong></span>
+            <span id="nlp-priority-badge" class="nlp-chip">Priority: <strong id="nlp-priority-val">-</strong></span>
+          </div>
+        </div>
+
+        <div class="form-row form-meta-row">
+          <!-- Due Date -->
+          <div class="form-meta-group">
+            <label for="task-due-date" class="meta-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+              Due Date
+            </label>
+            <input
+              type="date"
+              id="task-due-date"
+              class="date-input"
+              aria-label="Optional Due Date"
+            >
+          </div>
+
+          <!-- Reminder Alarm Time -->
+          <div class="form-meta-group">
+            <label for="task-reminder-time" class="meta-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+              Reminder Time
+            </label>
+            <input
+              type="time"
+              id="task-reminder-time"
+              class="time-input"
+              aria-label="Optional Reminder Time"
+            >
+          </div>
+
+          <!-- Priority -->
+          <div class="form-meta-group">
+            <label for="task-priority" class="meta-label">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z"></path>
+                <line x1="4" y1="22" x2="4" y2="15"></line>
+              </svg>
+              Priority
+            </label>
+            <div class="select-wrapper">
+              <select id="task-priority" class="select-input" aria-label="Task priority">
+                <option value="Low">Low Priority</option>
+                <option value="Medium" selected>Medium Priority</option>
+                <option value="High">High Priority</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Toolbar: Search, Filters, and Sort -->
+    <section class="toolbar-section" aria-label="Task filters and controls">
+      <div class="search-box">
+        <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input
+          type="text"
+          id="search-input"
+          class="search-input"
+          placeholder="Filter tasks by title or keyword..."
+          aria-label="Filter tasks by title"
+        >
+        <button id="clear-search-btn" class="clear-search-btn hidden" aria-label="Clear search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="controls-row">
+        <!-- Filter Tabs -->
+        <nav class="filter-tabs" aria-label="Task status filters">
+          <button class="filter-btn active" data-filter="all">
+            All <span class="filter-count" id="count-all">0</span>
+          </button>
+          <button class="filter-btn" data-filter="active">
+            Active <span class="filter-count" id="count-active">0</span>
+          </button>
+          <button class="filter-btn" data-filter="completed">
+            Completed <span class="filter-count" id="count-completed">0</span>
+          </button>
+        </nav>
+
+        <!-- Sort dropdown -->
+        <div class="sort-wrapper">
+          <label for="sort-select" class="sort-label">Sort:</label>
+          <select id="sort-select" class="sort-select" aria-label="Sort tasks">
+            <option value="created-desc">Newest First</option>
+            <option value="created-asc">Oldest First</option>
+            <option value="due-asc">Due Date (Earliest)</option>
+            <option value="priority-desc">Priority (High to Low)</option>
+            <option value="title-asc">Title (A-Z)</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- Task List Section -->
+    <main class="tasks-section" aria-live="polite">
+      <ul id="task-list" class="task-list">
+        <!-- Injected via JavaScript -->
+      </ul>
+
+      <!-- Empty State Container -->
+      <div id="empty-state" class="empty-state hidden">
+        <div class="empty-illustration" id="empty-icon">
+          <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <h3 id="empty-title" class="empty-title">No tasks found</h3>
+        <p id="empty-subtitle" class="empty-subtitle">Get started by creating a new task, setting a reminder, or using Planora AI.</p>
+      </div>
+    </main>
+
+    <!-- Bottom Actions & Status Footer -->
+    <footer class="app-footer">
+      <div class="pending-info">
+        <span class="pending-dot"></span>
+        <span id="pending-counter">0 tasks pending</span>
+      </div>
+      <div class="footer-actions">
+        <button id="clear-completed-btn" class="btn btn-outline-danger" disabled>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          Clear Completed
+        </button>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Real-time Reminder Alert Modal / Alarm Popup -->
+  <div id="reminder-alarm-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="alarm-modal-title">
+    <div class="modal-card alarm-modal-card">
+      <div class="alarm-icon-ring">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+          <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+        </svg>
+      </div>
+      <div class="alarm-body">
+        <span class="alarm-tag">⏰ Planora Reminder Alert</span>
+        <h3 id="alarm-task-title" class="alarm-title">Meeting with client</h3>
+        <p id="alarm-task-meta" class="alarm-meta">Scheduled for today at 3:00 PM</p>
+      </div>
+      <div class="alarm-actions">
+        <button type="button" id="alarm-snooze-btn" class="btn btn-secondary">
+          💤 Snooze 10m
+        </button>
+        <button type="button" id="alarm-done-btn" class="btn btn-primary">
+          ✓ Mark Completed
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Goal Breakdown Modal -->
+  <div id="breakdown-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="breakdown-modal-title">
+    <div class="modal-card modal-lg">
+      <div class="modal-header ai-modal-header">
+        <div class="ai-modal-heading">
+          <span class="ai-sparkle-icon">🧩</span>
+          <h2 id="breakdown-modal-title" class="modal-title">Planora AI Goal Breakdown</h2>
+        </div>
+        <button id="close-breakdown-btn" class="icon-btn" aria-label="Close breakdown modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          Enter any high-level objective, project, or goal. Planora's AI engine will deconstruct it into sequential milestones, assigning smart priorities and due dates.
+        </p>
+        <div class="form-group">
+          <label for="breakdown-input" class="field-label">Goal or Project Name</label>
+          <div class="breakdown-input-row">
+            <input
+              type="text"
+              id="breakdown-input"
+              class="text-input"
+              placeholder="e.g. 'Launch a YouTube channel', 'Prepare for tech interview'..."
+            >
+            <button id="generate-breakdown-btn" class="btn btn-ai-gradient">
+              <span class="sparkle">✨</span>
+              <span>Deconstruct</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Quick Goal Presets -->
+        <div class="presets-row">
+          <span class="presets-label">Try an example:</span>
+          <button class="preset-chip" data-goal="Launch SaaS landing page">🚀 Launch SaaS landing page</button>
+          <button class="preset-chip" data-goal="Prepare for technical interview">💻 Tech Interview Prep</button>
+          <button class="preset-chip" data-goal="Organize apartment deep clean">🧹 Apartment Deep Clean</button>
+        </div>
+
+        <!-- Breakdown Results Preview -->
+        <div id="breakdown-results" class="breakdown-results hidden">
+          <div class="results-header">
+            <h4>Generated Action Plan (<span id="breakdown-count">0</span> Subtasks)</h4>
+            <span class="badge badge-ai">Planora Sequence</span>
+          </div>
+          <ul id="breakdown-tasks-list" class="breakdown-tasks-list">
+            <!-- Injected by JS -->
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="cancel-breakdown-btn" class="btn btn-secondary">Cancel</button>
+        <button type="button" id="add-breakdown-tasks-btn" class="btn btn-primary" disabled>
+          Add Subtasks to List
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Daily Briefing Modal -->
+  <div id="briefing-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="briefing-modal-title">
+    <div class="modal-card">
+      <div class="modal-header ai-modal-header">
+        <div class="ai-modal-heading">
+          <span class="ai-sparkle-icon">📊</span>
+          <h2 id="briefing-modal-title" class="modal-title">Planora Daily Executive Briefing</h2>
+        </div>
+        <button id="close-briefing-btn" class="icon-btn" aria-label="Close briefing modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div id="briefing-content" class="briefing-content">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" id="dismiss-briefing-btn" class="btn btn-primary">Done</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI Co-Pilot Modal -->
+  <div id="copilot-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="copilot-modal-title">
+    <div class="modal-card modal-lg">
+      <div class="modal-header ai-modal-header">
+        <div class="ai-modal-heading">
+          <span class="ai-sparkle-icon">⚡</span>
+          <h2 id="copilot-modal-title" class="modal-title">Planora AI Co-Pilot</h2>
+        </div>
+        <button id="close-copilot-btn" class="icon-btn" aria-label="Close copilot modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="copilot-chat-container">
+          <div id="copilot-messages" class="copilot-messages">
+            <div class="copilot-msg ai">
+              <div class="copilot-avatar">
+                <svg width="18" height="18" viewBox="0 0 32 32" fill="none">
+                  <rect x="7" y="6" width="5" height="20" rx="2.5" fill="white"/>
+                  <path d="M10 6H19C23.4183 6 27 9.58172 27 14C27 18.4183 23.4183 22 19 22H10V17H18.5C20.1569 17 21.5 15.6569 21.5 14C21.5 12.3431 20.1569 11 18.5 11H10V6Z" fill="white"/>
+                </svg>
+              </div>
+              <div class="copilot-bubble">
+                <p>Hello! I am your <strong>Planora AI Assistant</strong>. You can ask me to generate tasks, suggest next steps, or schedule automated reminders.</p>
+                <div class="copilot-quick-prompts">
+                  <button class="copilot-prompt-btn" data-prompt="Create 4 high-priority tasks for website redesign">"4 tasks for website redesign"</button>
+                  <button class="copilot-prompt-btn" data-prompt="What should I work on first today?">"What should I do first today?"</button>
+                  <button class="copilot-prompt-btn" data-prompt="Remind me to take a break every 2 hours">"Set reminder habits"</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <form id="copilot-input-form" class="copilot-input-form">
+            <input
+              type="text"
+              id="copilot-user-input"
+              class="text-input"
+              placeholder="Ask Planora AI anything or request tasks with reminders..."
+              autocomplete="off"
+            >
+            <button type="submit" class="btn btn-ai-gradient">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Task Modal -->
+  <div id="edit-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="edit-modal-title" class="modal-title">Edit Task</h2>
+        <button id="close-modal-btn" class="icon-btn" aria-label="Close edit modal">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18"></line>
+            <line x1="6" y1="6" x2="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+
+      <form id="edit-task-form">
+        <input type="hidden" id="edit-task-id">
+
+        <div class="modal-body">
+          <div class="form-group">
+            <label for="edit-task-title" class="field-label">Task Title</label>
+            <input
+              type="text"
+              id="edit-task-title"
+              class="text-input"
+              maxlength="200"
+              required
+              aria-label="Edit task title"
+            >
+          </div>
+
+          <div class="form-row">
+            <div class="form-group flex-1">
+              <label for="edit-task-due-date" class="field-label">Due Date</label>
+              <input
+                type="date"
+                id="edit-task-due-date"
+                class="date-input"
+                aria-label="Edit due date"
+              >
+            </div>
+
+            <div class="form-group flex-1">
+              <label for="edit-task-reminder-time" class="field-label">Reminder Time</label>
+              <input
+                type="time"
+                id="edit-task-reminder-time"
+                class="time-input"
+                aria-label="Edit reminder time"
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="edit-task-priority" class="field-label">Priority</label>
+            <div class="select-wrapper">
+              <select id="edit-task-priority" class="select-input" aria-label="Edit priority">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" id="cancel-edit-btn" class="btn btn-secondary">Cancel</button>
+          <button type="submit" class="btn btn-primary">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
